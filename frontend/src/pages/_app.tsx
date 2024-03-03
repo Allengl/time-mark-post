@@ -4,6 +4,8 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import { Container, SSRProvider } from "react-bootstrap";
 import style from "@/styles/App.module.css";
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,11 +24,13 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <SSRProvider>
         <div className={inter.className}>
+          <NavBar />
           <main>
             <Container className={style.pageContainer}>
               <Component {...pageProps} />
             </Container>
           </main>
+          <Footer />
         </div>
       </SSRProvider>
     </>
