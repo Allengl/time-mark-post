@@ -1,6 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import * as BlogApi from "@/network/api/blog";
+import FormInputField from "@/components/FormInputField";
 
 interface CreatePostFormData {
   slug: string;
@@ -10,7 +11,11 @@ interface CreatePostFormData {
 }
 
 const CreateBlogPostPage = () => {
-  const { register, handleSubmit } = useForm<CreatePostFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreatePostFormData>();
 
   const onSubmit = async (input: CreatePostFormData) => {
     try {
@@ -18,6 +23,7 @@ const CreateBlogPostPage = () => {
       alert("Post created successfully");
     } catch (error) {
       console.error(error);
+
       alert(error);
     }
   };
@@ -26,30 +32,34 @@ const CreateBlogPostPage = () => {
     <div>
       <h1>Create a post</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group className="mb-3" controlId="title-input">
-          <Form.Label>Post title</Form.Label>
-          <Form.Control {...register("title")} placeholder="Post title" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="title-input">
-          <Form.Label>Post slug</Form.Label>
-          <Form.Control {...register("slug")} placeholder="Post slug" />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="title-input">
-          <Form.Label>Post summary</Form.Label>
-          <Form.Control
-            {...register("summary")}
-            placeholder="Post summary"
-            as="textarea"
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="title-input">
-          <Form.Label>Post body</Form.Label>
-          <Form.Control
-            {...register("body")}
-            placeholder="Post body"
-            as="textarea"
-          />
-        </Form.Group>
+        <FormInputField
+          label="Post title"
+          register={register("title", { required: "Required" })}
+          placeholder="Post title"
+          maxLength={100}
+          error={errors.title}
+        />
+        <FormInputField
+          label="Post slug"
+          register={register("slug", { required: "required" })}
+          placeholder="Post slug"
+          maxLength={100}
+          error={errors.slug}
+        />
+        <FormInputField
+          label="Post summary"
+          register={register("summary", { required: "required" })}
+          placeholder="Post summary"
+          maxLength={300}
+          as="textarea"
+          error={errors.summary}
+        />
+        <FormInputField
+          label="Post body"
+          register={register("body", { required: "required" })}
+          placeholder="Post body"
+          as="textarea"
+        />
         <Button type="submit">Create post</Button>
       </Form>
     </div>
