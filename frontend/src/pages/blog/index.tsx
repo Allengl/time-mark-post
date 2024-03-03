@@ -6,8 +6,8 @@ const BlogPage = () => {
   return (
     <>
       <Head>
-        <title>文章 -- 时光印记</title>
-        <meta name="description" content="写下你的时光" />
+        <title>Article -- Time mark</title>
+        <meta name="description" content="write your time" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

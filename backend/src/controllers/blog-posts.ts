@@ -35,6 +35,8 @@ export const createBlogPost: RequestHandler<
 
     res.status(201).json(newPost);
   } catch (error) {
+    console.error(error);
+
     res.status(500).json({ error });
   }
 };

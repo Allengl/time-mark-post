@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>时光印记 -- 分享你的时光</title>
+        <title>Time mark -- share your time</title>
         <meta name="description" content="A full-stack Nextjs app byAllengl" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
