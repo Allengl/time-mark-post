@@ -1,7 +1,10 @@
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import * as BlogApi from "@/network/api/blog";
-import FormInputField from "@/components/FormInputField";
+import FormInputField from "@/components/form/FormInputField";
+import MarkdownEditor from "@/components/form/MarkdownEditor";
+import { generateSlug } from "@/utils/utils";
+import LoadingButton from "@/components/LoadingButton";
 
 interface CreatePostFormData {
   slug: string;
@@ -14,7 +17,10 @@ const CreateBlogPostPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    setValue,
+    getValues,
+    watch,
+    formState: { errors, isSubmitting },
   } = useForm<CreatePostFormData>();
 
   const onSubmit = async (input: CreatePostFormData) => {
@@ -28,6 +34,12 @@ const CreateBlogPostPage = () => {
     }
   };
 
+  const generateSlugFromTitle = () => {
+    if (getValues("slug")) return;
+    const slug = generateSlug(getValues("title"));
+    setValue("slug", slug, { shouldValidate: true });
+  };
+
   return (
     <div>
       <h1>Create a post</h1>
@@ -38,6 +50,7 @@ const CreateBlogPostPage = () => {
           placeholder="Post title"
           maxLength={100}
           error={errors.title}
+          onBlur={generateSlugFromTitle}
         />
         <FormInputField
           label="Post slug"
@@ -54,13 +67,16 @@ const CreateBlogPostPage = () => {
           as="textarea"
           error={errors.summary}
         />
-        <FormInputField
+        <MarkdownEditor
           label="Post body"
           register={register("body", { required: "required" })}
-          placeholder="Post body"
-          as="textarea"
+          watch={watch}
+          setValue={setValue}
+          error={errors.body}
         />
-        <Button type="submit">Create post</Button>
+        <LoadingButton type="submit" isLoading={isSubmitting}>
+          Create post
+        </LoadingButton>
       </Form>
     </div>
   );
