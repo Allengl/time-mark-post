@@ -11,6 +11,8 @@ app.use(express.json());
 
 app.use(morgan("dev"));
 
+app.use("/uploads/featured-images", express.static("uploads/featured-images"));
+
 app.use(
   cors({
     origin: env.WEBSITE_URL,

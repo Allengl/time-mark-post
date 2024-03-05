@@ -11,6 +11,7 @@ interface CreatePostFormData {
   title: string;
   summary: string;
   body: string;
+  featuredImage: FileList;
 }
 
 const CreateBlogPostPage = () => {
@@ -23,9 +24,21 @@ const CreateBlogPostPage = () => {
     formState: { errors, isSubmitting },
   } = useForm<CreatePostFormData>();
 
-  const onSubmit = async (input: CreatePostFormData) => {
+  const onSubmit = async ({
+    title,
+    slug,
+    summary,
+    featuredImage,
+    body,
+  }: CreatePostFormData) => {
     try {
-      await BlogApi.createBlogPost(input);
+      await BlogApi.createBlogPost({
+        slug,
+        title,
+        summary,
+        featuredImage: featuredImage[0],
+        body,
+      });
       alert("Post created successfully");
     } catch (error) {
       console.error(error);
@@ -66,6 +79,13 @@ const CreateBlogPostPage = () => {
           maxLength={300}
           as="textarea"
           error={errors.summary}
+        />
+        <FormInputField
+          label="Post image"
+          register={register("featuredImage", { required: "required" })}
+          type="file"
+          accept="image/png, image/jpeg"
+          error={errors.featuredImage}
         />
         <MarkdownEditor
           label="Post body"
