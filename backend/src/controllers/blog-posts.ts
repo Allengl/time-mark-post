@@ -16,6 +16,22 @@ export const getBlogPosts: RequestHandler = async (req, res, next) => {
   }
 };
 
+export const getBlogPostBySlug: RequestHandler = async (req, res, next) => {
+  try {
+    const blogPost = await BlogPostModel.findOne({
+      slug: req.params.slug,
+    }).exec();
+
+    if (!blogPost) {
+      throw createHttpError(404, "No blog post found for this slug");
+    }
+
+    res.status(200).json(blogPost);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getAllBlogPostSlugs: RequestHandler = async (req, res, next) => {
   try {
     const results = await BlogPostModel.find().select("slug").exec();

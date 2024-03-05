@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import usersRoutes from "./routes/users";
 import blogPostRoutes from "./routes/blog-posts";
 import cors from "cors";
 import env from "./env";
@@ -21,6 +22,7 @@ app.use(
   })
 );
 
+app.use("/users", usersRoutes);
 app.use("/posts", blogPostRoutes);
 
 app.use((req, res, next) => next(createHttpError(404, "EndPoint not found")));
