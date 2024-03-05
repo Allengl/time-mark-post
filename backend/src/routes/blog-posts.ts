@@ -4,7 +4,7 @@ import { featuredImageUpload } from "../middlewares/image-upload";
 
 const router = express.Router();
 
-router.get("/", BlogPostsContraller.getBlogPost);
+router.get("/", BlogPostsContraller.getBlogPosts);
 
 router.get("/slugs", BlogPostsContraller.getAllBlogPostSlugs);
 
