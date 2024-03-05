@@ -8,6 +8,8 @@ import style from "@/styles/App.module.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import NextNProgress from "nextjs-progressbar";
+import SignUpModal from "@/components/auth/SignUpModal";
+import LoginModal from "@/components/auth/LoginModal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +35,12 @@ export default function App({ Component, pageProps }: AppProps) {
           </Container>
         </main>
         <Footer />
+        <LoginModal
+          onDismiss={() => {}}
+          onSignUpInsteadClicked={() => {}}
+          onForgotPasswordClicked={() => {}}
+        />
+        {/* <SignUpModal onDismiss={() => {}} onLoginInsteadClicked={() => {}} /> */}
       </div>
     </>
   );

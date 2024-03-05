@@ -43,8 +43,6 @@ export const signUp: RequestHandler<
       if (error) throw Error;
       res.status(201).json(newUser);
     });
-
-    res.status(201).json(newUser);
   } catch (error) {
     next(error);
   }
