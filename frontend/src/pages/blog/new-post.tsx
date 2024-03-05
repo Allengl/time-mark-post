@@ -5,6 +5,7 @@ import FormInputField from "@/components/form/FormInputField";
 import MarkdownEditor from "@/components/form/MarkdownEditor";
 import { generateSlug } from "@/utils/utils";
 import LoadingButton from "@/components/LoadingButton";
+import { useRouter } from "next/router";
 
 interface CreatePostFormData {
   slug: string;
@@ -15,6 +16,8 @@ interface CreatePostFormData {
 }
 
 const CreateBlogPostPage = () => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -39,7 +42,7 @@ const CreateBlogPostPage = () => {
         featuredImage: featuredImage[0],
         body,
       });
-      alert("Post created successfully");
+      await router.push("/blog/" + slug);
     } catch (error) {
       console.error(error);
 

@@ -6,6 +6,10 @@ const router = express.Router();
 
 router.get("/", BlogPostsContraller.getBlogPost);
 
+router.get("/slugs", BlogPostsContraller.getAllBlogPostSlugs);
+
+router.get("/post/:slug", BlogPostsContraller.getBlogPostBySlug);
+
 router.post(
   "/",
   featuredImageUpload.single("featuredImage"),

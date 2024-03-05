@@ -15,12 +15,38 @@ export const getBlogPost: RequestHandler = async (req, res, next) => {
   }
 };
 
+export const getAllBlogPostSlugs: RequestHandler = async (req, res, next) => {
+  try {
+    const results = await BlogPostModel.find().select("slug").exec();
+    const slugs = results.map((post) => post.slug);
+    res.status(200).json(slugs);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
 interface BlogPostBody {
   slug: string;
   title: string;
   summary: string;
   body: string;
 }
+
+export const getBlogPostBySlug: RequestHandler = async (req, res, next) => {
+  try {
+    const blogPost = await BlogPostModel.findOne({
+      slug: req.params.slug,
+    }).exec();
+
+    if (!blogPost) {
+      return res.sendStatus(404);
+    }
+
+    res.status(200).json(blogPost);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
+};
 
 export const createBlogPost: RequestHandler<
   unknown,

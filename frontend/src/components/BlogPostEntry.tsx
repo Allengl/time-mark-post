@@ -11,7 +11,7 @@ const BlogPostEntry = ({
   post: { slug, title, summary, createdAt },
   className,
 }: BlogPostEntryProps) => {
-  const postLink = "/blog" + slug;
+  const postLink = "/blog/" + slug;
 
   return (
     <Card className={className}>
