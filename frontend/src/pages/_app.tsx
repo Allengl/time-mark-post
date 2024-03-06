@@ -3,13 +3,11 @@ import "@/styles/utils.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import { Container, SSRProvider } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import style from "@/styles/App.module.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import NextNProgress from "nextjs-progressbar";
-import SignUpModal from "@/components/auth/SignUpModal";
-import LoginModal from "@/components/auth/LoginModal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Time mark -- share your time</title>
+        <title>时光印迹 -- 分享你的观点</title>
         <meta name="description" content="A full-stack Nextjs app byAllengl" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -35,12 +33,6 @@ export default function App({ Component, pageProps }: AppProps) {
           </Container>
         </main>
         <Footer />
-        <LoginModal
-          onDismiss={() => {}}
-          onSignUpInsteadClicked={() => {}}
-          onForgotPasswordClicked={() => {}}
-        />
-        {/* <SignUpModal onDismiss={() => {}} onLoginInsteadClicked={() => {}} /> */}
       </div>
     </>
   );

@@ -8,3 +8,9 @@ export interface BlogPost {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface BlogPostPage {
+  blogPosts: BlogPost[];
+  page: number;
+  totalPages: number;
+}

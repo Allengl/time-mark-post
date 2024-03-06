@@ -13,21 +13,21 @@ const NavBar = () => {
     <Navbar expand="md" collapseOnSelect variant="dark" bg="body" sticky="top">
       <Container>
         <Navbar.Brand as={Link} href="/" className="d-flex gap-1">
-          <Image src={logo} alt="Time mark logo" width={30} height={30} />
-          <span className={styles.brandText}>Time mark</span>
+          <Image src={logo} alt="时光印迹 logo" width={30} height={30} />
+          <span className={styles.brandText}>时光印迹</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="main-navbar" />
         <Navbar.Collapse id="main-navbar">
           <Nav>
             <Nav.Link as={Link} href="/" active={router.pathname === "/"}>
-              Home
+              首页
             </Nav.Link>
             <Nav.Link
               as={Link}
               href="/blog"
               active={router.pathname === "/blog"}
             >
-              Article
+              博客
             </Nav.Link>
           </Nav>
           <Nav className="ms-auto">
@@ -36,7 +36,7 @@ const NavBar = () => {
               className="link-primary d-flex align-items-center gap-1"
             >
               <FiEdit />
-              Create post
+              写博客
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

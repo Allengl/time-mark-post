@@ -1,3 +1,4 @@
+import PaginationBar from "@/components/PaginationBar";
 import React from "react";
 
 const Home = () => {

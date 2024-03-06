@@ -7,14 +7,14 @@ const Footer = () => {
     <footer className={styles.footer}>
       <Container>
         <p>© {new Date().getFullYear()} by Allengl</p>
-        <ul>
+        {/* <ul>
           <li>
             <Link href="/privacy">Privacy</Link>
           </li>
           <li>
             <Link href="/imprint">Imprint</Link>
           </li>
-        </ul>
+        </ul> */}
       </Container>
     </footer>
   );

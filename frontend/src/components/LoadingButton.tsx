@@ -22,7 +22,7 @@ const LoadingButton = ({
             role="status"
             aria-hidden="true"
           />
-          <span className="visually-hidden">Loading...</span>
+          <span className="visually-hidden">加载中...</span>
         </>
       )}
       {children}

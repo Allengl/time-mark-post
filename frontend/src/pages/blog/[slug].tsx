@@ -58,13 +58,13 @@ const BlogPostPage = ({
   return (
     <>
       <Head>
-        <title>{`${title} - Time mark`}</title>
+        <title>{`${title} - 时光印迹`}</title>
         <meta name="description" content={summary} />
       </Head>
 
       <div className={styles.container}>
         <div className="mb-4 text-center">
-          <Link href="/blog">← Blog Home</Link>
+          <Link href="/blog">← 回到主页</Link>
         </div>
 
         <article>

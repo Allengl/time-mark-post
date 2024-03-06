@@ -6,11 +6,39 @@ import sharp from "sharp";
 import env from "../env";
 import createHttpError from "http-errors";
 
-export const getBlogPosts: RequestHandler = async (req, res, next) => {
-  try {
-    const allBlogPosts = await BlogPostModel.find().sort({ _id: -1 }).exec();
+interface BlogPostQuery {
+  page: string;
+}
+export const getBlogPosts: RequestHandler<
+  unknown,
+  unknown,
+  unknown,
+  BlogPostQuery
+> = async (req, res, next) => {
+  const page = parseInt(req.query.page || "1");
+  const pageSize = 6;
 
-    res.status(200).json(allBlogPosts);
+  try {
+    const getBlogPostQuery = await BlogPostModel.find()
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .sort({ _id: -1 })
+      .exec();
+
+    const countDocumentsQuery = await BlogPostModel.countDocuments().exec();
+
+    const [blogPosts, totalResults] = await Promise.all([
+      getBlogPostQuery,
+      countDocumentsQuery,
+    ]);
+
+    const totalPages = Math.ceil(totalResults / pageSize);
+
+    res.status(200).json({
+      blogPosts,
+      page,
+      totalPages,
+    });
   } catch (error) {
     next(error);
   }

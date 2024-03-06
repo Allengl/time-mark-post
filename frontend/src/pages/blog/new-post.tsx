@@ -58,47 +58,47 @@ const CreateBlogPostPage = () => {
 
   return (
     <div>
-      <h1>Create a post</h1>
+      <h1>创建博客</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormInputField
-          label="Post title"
-          register={register("title", { required: "Required" })}
-          placeholder="Post title"
+          label="标题"
+          register={register("title", { required: "required" })}
+          placeholder="标题"
           maxLength={100}
           error={errors.title}
           onBlur={generateSlugFromTitle}
         />
         <FormInputField
-          label="Post slug"
+          label="标签"
           register={register("slug", { required: "required" })}
-          placeholder="Post slug"
+          placeholder="标签"
           maxLength={100}
           error={errors.slug}
         />
         <FormInputField
-          label="Post summary"
+          label="摘要"
           register={register("summary", { required: "required" })}
-          placeholder="Post summary"
+          placeholder="摘要"
           maxLength={300}
           as="textarea"
           error={errors.summary}
         />
         <FormInputField
-          label="Post image"
+          label="图片"
           register={register("featuredImage", { required: "required" })}
           type="file"
           accept="image/png, image/jpeg"
           error={errors.featuredImage}
         />
         <MarkdownEditor
-          label="Post body"
+          label="正文"
           register={register("body", { required: "required" })}
           watch={watch}
           setValue={setValue}
           error={errors.body}
         />
         <LoadingButton type="submit" isLoading={isSubmitting}>
-          Create post
+          发布
         </LoadingButton>
       </Form>
     </div>
