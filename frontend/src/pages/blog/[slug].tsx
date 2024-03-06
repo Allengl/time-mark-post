@@ -6,6 +6,7 @@ import styles from "@/styles/BlogPostPage.module.css";
 import Link from "next/link";
 import { formatDate } from "@/utils/utils";
 import Image from "next/image";
+import { FiEdit } from "react-icons/fi";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = await BlogApi.getAllBlogPostSlugs();
@@ -16,6 +17,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: "blocking", // auto generate slugs
   };
 };
+
+interface BlogPostPageProps {
+  post: BlogPost;
+}
 
 export const getStaticProps: GetStaticProps<BlogPostPageProps> = async ({
   params,
@@ -31,9 +36,6 @@ export const getStaticProps: GetStaticProps<BlogPostPageProps> = async ({
   };
 };
 
-interface BlogPostPageProps {
-  post: BlogPost;
-}
 const BlogPostPage = ({
   post: {
     _id,
@@ -63,6 +65,13 @@ const BlogPostPage = ({
       </Head>
 
       <div className={styles.container}>
+        <Link
+          href={"/blog/edit-post/" + slug}
+          className="btn btn-outline-primary d-inline-flex align-items-center mb-2 gap-1"
+        >
+          <FiEdit />
+          编辑博客
+        </Link>
         <div className="mb-4 text-center">
           <Link href="/blog">← 回到主页</Link>
         </div>

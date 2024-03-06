@@ -33,3 +33,26 @@ export async function createBlogPost(input: CreateBlogPostValues) {
   const response = await api.post<BlogPost>("/posts", formData);
   return response.data;
 }
+
+interface UpdateBlogPostValues {
+  slug: string;
+  title: string;
+  summary: string;
+  body: string;
+  featuredImage: File;
+}
+
+export async function updateBlogPost(
+  blogPostId: string,
+  input: UpdateBlogPostValues,
+) {
+  await api.patch<BlogPost>("/posts/" + blogPostId, input, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+export async function deleteBlogPost(blogPostId: string) {
+  await api.delete("/posts/" + blogPostId);
+}

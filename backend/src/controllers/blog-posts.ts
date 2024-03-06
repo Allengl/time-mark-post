@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import sharp from "sharp";
 import env from "../env";
 import createHttpError from "http-errors";
+import fs from "fs";
 
 interface BlogPostQuery {
   page: string;
@@ -83,6 +84,8 @@ export const createBlogPost: RequestHandler<
   unknown
 > = async (req, res, next) => {
   const { slug, title, summary, body } = req.body;
+  console.log(req.body);
+
   const featuredImage = req.file;
 
   try {
@@ -91,10 +94,7 @@ export const createBlogPost: RequestHandler<
     const existingSlug = await BlogPostModel.findOne({ slug }).exec();
 
     if (existingSlug) {
-      throw createHttpError(
-        409,
-        "slug already taken. Please chose a different one."
-      );
+      throw createHttpError(409, "标签名重复.");
     }
 
     const blogPostId = new mongoose.Types.ObjectId();
@@ -116,6 +116,89 @@ export const createBlogPost: RequestHandler<
     });
 
     res.status(201).json(newPost);
+  } catch (error) {
+    next(error);
+  }
+};
+
+interface UpdateBlogPostParams {
+  blogPostId: string;
+}
+
+export const updateBlogPost: RequestHandler<
+  UpdateBlogPostParams,
+  unknown,
+  BlogPostBody,
+  unknown
+> = async (req, res, next) => {
+  console.log(req.body);
+
+  const { blogPostId } = req.params;
+
+  const { slug, title, summary, body } = req.body;
+
+  const featuredImage = req.file;
+  try {
+    const existingSlug = await BlogPostModel.findOne({ slug }).exec();
+
+    if (existingSlug && !existingSlug._id.equals(blogPostId)) {
+      throw createHttpError(409, "标签名重复.");
+    }
+
+    const postToEdit = await BlogPostModel.findById(blogPostId).exec();
+
+    if (!postToEdit) {
+      throw createHttpError(404);
+    }
+
+    postToEdit.slug = slug;
+    postToEdit.title = title;
+    postToEdit.summary = summary;
+    postToEdit.body = body;
+
+    if (featuredImage) {
+      const featuredImageDestinationPath =
+        "/uploads/featured-images/" + blogPostId + ".png";
+
+      await sharp(featuredImage.buffer)
+        .resize(700, 450)
+        .toFile("./" + featuredImageDestinationPath);
+
+      postToEdit.featuredImageUrl =
+        env.SERVER_URL +
+        featuredImageDestinationPath +
+        "?lastupdated=" +
+        Date.now();
+    }
+
+    await postToEdit.save();
+
+    res.sendStatus(200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteBlogPost: RequestHandler = async (req, res, next) => {
+  const { blogPostId } = req.params;
+
+  try {
+    const postToDelete = await BlogPostModel.findById(blogPostId).exec();
+
+    if (!postToDelete) {
+      throw createHttpError(404, "找不到博客 ");
+    }
+
+    if (postToDelete.featuredImageUrl.startsWith(env.SERVER_URL)) {
+      const iamgePath = postToDelete.featuredImageUrl
+        .split(env.SERVER_URL)[1]
+        .split("?")[0];
+      fs.unlinkSync("." + iamgePath);
+    }
+
+    await postToDelete.deleteOne();
+
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }

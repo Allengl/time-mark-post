@@ -6,6 +6,7 @@ import MarkdownEditor from "@/components/form/MarkdownEditor";
 import { generateSlug } from "@/utils/utils";
 import LoadingButton from "@/components/LoadingButton";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 interface CreatePostFormData {
   slug: string;
@@ -50,11 +51,11 @@ const CreateBlogPostPage = () => {
     }
   };
 
-  const generateSlugFromTitle = () => {
-    if (getValues("slug")) return;
-    const slug = generateSlug(getValues("title"));
-    setValue("slug", slug, { shouldValidate: true });
-  };
+  // const generateSlugFromTitle = () => {
+  //   if (getValues("slug")) return;
+  //   const slug = generateSlug(getValues("title"));
+  //   setValue("slug", slug, { shouldValidate: true });
+  // };
 
   return (
     <div>
@@ -66,7 +67,7 @@ const CreateBlogPostPage = () => {
           placeholder="标题"
           maxLength={100}
           error={errors.title}
-          onBlur={generateSlugFromTitle}
+          // onBlur={generateSlugFromTitle}
         />
         <FormInputField
           label="标签"

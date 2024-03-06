@@ -10,10 +10,14 @@ router.get("/slugs", BlogPostsContraller.getAllBlogPostSlugs);
 
 router.get("/post/:slug", BlogPostsContraller.getBlogPostBySlug);
 
+router.patch("/:blogPostId", BlogPostsContraller.updateBlogPost);
+
 router.post(
   "/",
   featuredImageUpload.single("featuredImage"),
   BlogPostsContraller.createBlogPost
 );
+
+router.delete("/:blogPostId", BlogPostsContraller.deleteBlogPost);
 
 export default router;

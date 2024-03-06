@@ -45,7 +45,7 @@ const MarkdownEditor = ({
             shouldDirty: true,
           })
         }
-        placeholder="Write something..."
+        placeholder="写点什么好呢..."
         className={error ? "is-invalid" : ""}
         style={{ height: editorHeight }}
       />
