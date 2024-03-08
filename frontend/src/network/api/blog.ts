@@ -21,16 +21,15 @@ interface CreateBlogPostValues {
   title: string;
   summary: string;
   body: string;
-  featuredImage: File;
+  // featuredImage: File;
 }
 
 export async function createBlogPost(input: CreateBlogPostValues) {
-  const formData = new FormData();
-  Object.entries(input).forEach(([key, value]) => {
-    formData.append(key, value);
+  const response = await api.post<BlogPost>("/posts", input, {
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
-
-  const response = await api.post<BlogPost>("/posts", formData);
   return response.data;
 }
 
@@ -39,7 +38,7 @@ interface UpdateBlogPostValues {
   title: string;
   summary: string;
   body: string;
-  featuredImage: File;
+  // featuredImage: File;
 }
 
 export async function updateBlogPost(

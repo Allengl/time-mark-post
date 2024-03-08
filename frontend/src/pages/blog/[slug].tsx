@@ -35,16 +35,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 const BlogPostPage = ({
-  post: {
-    _id,
-    slug,
-    title,
-    summary,
-    body,
-    featuredImageUrl,
-    createdAt,
-    updatedAt,
-  },
+  post: { _id, slug, title, summary, body, createdAt, updatedAt },
 }: BlogPostPageProps) => {
   const createdUpdatedText =
     updatedAt > createdAt ? (
@@ -79,16 +70,6 @@ const BlogPostPage = ({
             <h1 className="mb-3 text-center">{title}</h1>
             <p className="h5 mb-3 text-center">{summary}</p>
             <span className="text-muted">{createdUpdatedText}</span>
-            <div className={styles.featuredImageWrapper}>
-              <Image
-                src={featuredImageUrl}
-                alt="Blog post featured image"
-                fill
-                sizes="(max-width: 768px) 100vw, 700px "
-                priority
-                className="rounded"
-              />
-            </div>
           </div>
           <div>{body}</div>
         </article>

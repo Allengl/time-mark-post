@@ -1,11 +1,7 @@
 import { RequestHandler } from "express";
 import BlogPostModel from "../models/blog-post";
-import assertIsDefined from "../utils/assertIsDefined";
 import mongoose from "mongoose";
-import sharp from "sharp";
-import env from "../env";
 import createHttpError from "http-errors";
-import fs from "fs";
 
 interface BlogPostQuery {
   page: string;
@@ -84,13 +80,8 @@ export const createBlogPost: RequestHandler<
   unknown
 > = async (req, res, next) => {
   const { slug, title, summary, body } = req.body;
-  console.log(req.body);
-
-  const featuredImage = req.file;
 
   try {
-    assertIsDefined(featuredImage);
-
     const existingSlug = await BlogPostModel.findOne({ slug }).exec();
 
     if (existingSlug) {
@@ -99,20 +90,12 @@ export const createBlogPost: RequestHandler<
 
     const blogPostId = new mongoose.Types.ObjectId();
 
-    const featuredImageDestinationPath =
-      "/uploads/featured-images/" + blogPostId + ".png";
-
-    await sharp(featuredImage.buffer)
-      .resize(700, 450)
-      .toFile("./" + featuredImageDestinationPath);
-
     const newPost = await BlogPostModel.create({
       _id: blogPostId,
       slug,
       title,
       summary,
       body,
-      featuredImageUrl: env.SERVER_URL + featuredImageDestinationPath,
     });
 
     res.status(201).json(newPost);
@@ -131,13 +114,10 @@ export const updateBlogPost: RequestHandler<
   BlogPostBody,
   unknown
 > = async (req, res, next) => {
-  console.log(req.body);
-
   const { blogPostId } = req.params;
 
   const { slug, title, summary, body } = req.body;
 
-  const featuredImage = req.file;
   try {
     const existingSlug = await BlogPostModel.findOne({ slug }).exec();
 
@@ -156,21 +136,6 @@ export const updateBlogPost: RequestHandler<
     postToEdit.summary = summary;
     postToEdit.body = body;
 
-    if (featuredImage) {
-      const featuredImageDestinationPath =
-        "/uploads/featured-images/" + blogPostId + ".png";
-
-      await sharp(featuredImage.buffer)
-        .resize(700, 450)
-        .toFile("./" + featuredImageDestinationPath);
-
-      postToEdit.featuredImageUrl =
-        env.SERVER_URL +
-        featuredImageDestinationPath +
-        "?lastupdated=" +
-        Date.now();
-    }
-
     await postToEdit.save();
 
     res.sendStatus(200);
@@ -187,13 +152,6 @@ export const deleteBlogPost: RequestHandler = async (req, res, next) => {
 
     if (!postToDelete) {
       throw createHttpError(404, "找不到博客 ");
-    }
-
-    if (postToDelete.featuredImageUrl.startsWith(env.SERVER_URL)) {
-      const iamgePath = postToDelete.featuredImageUrl
-        .split(env.SERVER_URL)[1]
-        .split("?")[0];
-      fs.unlinkSync("." + iamgePath);
     }
 
     await postToDelete.deleteOne();

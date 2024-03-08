@@ -14,8 +14,6 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/uploads/featured-images", express.static("uploads/featured-images"));
-
 app.use(
   cors({
     origin: env.WEBSITE_URL,

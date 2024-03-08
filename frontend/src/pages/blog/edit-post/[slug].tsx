@@ -63,7 +63,7 @@ export default function EditBlogPostPage({ post }: EditBlogPostPageProps) {
     title,
     summary,
     body,
-    featuredImage,
+    // featuredImage,
   }: EditPostFormData) {
     try {
       await BlogApi.updateBlogPost(post._id, {
@@ -71,7 +71,7 @@ export default function EditBlogPostPage({ post }: EditBlogPostPageProps) {
         title,
         summary,
         body,
-        featuredImage: featuredImage?.item(0) as File,
+        // featuredImage: featuredImage?.item(0) as File,
       });
 
       await router.push("/blog/" + slug);
@@ -127,13 +127,13 @@ export default function EditBlogPostPage({ post }: EditBlogPostPageProps) {
           as="textarea"
           error={errors.summary}
         />
-        <FormInputField
+        {/* <FormInputField
           label="图片"
           register={register("featuredImage", { required: "required" })}
           type="file"
           accept="image/png, image/jpeg"
           error={errors.featuredImage}
-        />
+        /> */}
         <MarkdownEditor
           label="正文"
           register={register("body", { required: "required" })}

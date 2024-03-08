@@ -13,7 +13,7 @@ interface CreatePostFormData {
   title: string;
   summary: string;
   body: string;
-  featuredImage: FileList;
+  // featuredImage: FileList;
 }
 
 const CreateBlogPostPage = () => {
@@ -32,7 +32,7 @@ const CreateBlogPostPage = () => {
     title,
     slug,
     summary,
-    featuredImage,
+    // featuredImage,
     body,
   }: CreatePostFormData) => {
     try {
@@ -40,7 +40,7 @@ const CreateBlogPostPage = () => {
         slug,
         title,
         summary,
-        featuredImage: featuredImage[0],
+        // featuredImage: featuredImage[0],
         body,
       });
       await router.push("/blog/" + slug);
@@ -84,13 +84,13 @@ const CreateBlogPostPage = () => {
           as="textarea"
           error={errors.summary}
         />
-        <FormInputField
+        {/* <FormInputField
           label="图片"
           register={register("featuredImage", { required: "required" })}
           type="file"
           accept="image/png, image/jpeg"
           error={errors.featuredImage}
-        />
+        /> */}
         <MarkdownEditor
           label="正文"
           register={register("body", { required: "required" })}
