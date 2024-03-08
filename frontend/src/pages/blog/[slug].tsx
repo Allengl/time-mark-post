@@ -5,7 +5,6 @@ import Head from "next/head";
 import styles from "@/styles/BlogPostPage.module.css";
 import Link from "next/link";
 import { formatDate } from "@/utils/utils";
-import Image from "next/image";
 import { FiEdit } from "react-icons/fi";
 
 export const getStaticPaths: GetStaticPaths = async () => {

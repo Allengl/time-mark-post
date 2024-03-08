@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import * as BlogApi from "@/network/api/blog";
 import FormInputField from "@/components/form/FormInputField";
 import MarkdownEditor from "@/components/form/MarkdownEditor";
-import { generateSlug } from "@/utils/utils";
 import LoadingButton from "@/components/LoadingButton";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -13,7 +12,6 @@ interface CreatePostFormData {
   title: string;
   summary: string;
   body: string;
-  // featuredImage: FileList;
 }
 
 const CreateBlogPostPage = () => {
@@ -32,7 +30,6 @@ const CreateBlogPostPage = () => {
     title,
     slug,
     summary,
-    // featuredImage,
     body,
   }: CreatePostFormData) => {
     try {
@@ -40,7 +37,6 @@ const CreateBlogPostPage = () => {
         slug,
         title,
         summary,
-        // featuredImage: featuredImage[0],
         body,
       });
       await router.push("/blog/" + slug);
@@ -50,12 +46,6 @@ const CreateBlogPostPage = () => {
       alert(error);
     }
   };
-
-  // const generateSlugFromTitle = () => {
-  //   if (getValues("slug")) return;
-  //   const slug = generateSlug(getValues("title"));
-  //   setValue("slug", slug, { shouldValidate: true });
-  // };
 
   return (
     <div>
@@ -67,7 +57,6 @@ const CreateBlogPostPage = () => {
           placeholder="标题"
           maxLength={100}
           error={errors.title}
-          // onBlur={generateSlugFromTitle}
         />
         <FormInputField
           label="标签"
@@ -84,13 +73,7 @@ const CreateBlogPostPage = () => {
           as="textarea"
           error={errors.summary}
         />
-        {/* <FormInputField
-          label="图片"
-          register={register("featuredImage", { required: "required" })}
-          type="file"
-          accept="image/png, image/jpeg"
-          error={errors.featuredImage}
-        /> */}
+
         <MarkdownEditor
           label="正文"
           register={register("body", { required: "required" })}

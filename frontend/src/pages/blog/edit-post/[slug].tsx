@@ -7,7 +7,6 @@ import { Button, Form } from "react-bootstrap";
 import FormInputField from "@/components/form/FormInputField";
 import MarkdownEditor from "@/components/form/MarkdownEditor";
 import LoadingButton from "@/components/LoadingButton";
-import { generateSlug } from "@/utils/utils";
 import { useState } from "react";
 import ConfirmationModal from "@/components/ConfirmationModal";
 

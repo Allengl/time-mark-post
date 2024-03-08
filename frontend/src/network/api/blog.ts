@@ -21,7 +21,6 @@ interface CreateBlogPostValues {
   title: string;
   summary: string;
   body: string;
-  // featuredImage: File;
 }
 
 export async function createBlogPost(input: CreateBlogPostValues) {
@@ -38,7 +37,6 @@ interface UpdateBlogPostValues {
   title: string;
   summary: string;
   body: string;
-  // featuredImage: File;
 }
 
 export async function updateBlogPost(
