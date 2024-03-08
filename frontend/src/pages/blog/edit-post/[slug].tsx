@@ -11,9 +11,7 @@ import { generateSlug } from "@/utils/utils";
 import { useState } from "react";
 import ConfirmationModal from "@/components/ConfirmationModal";
 
-export const getServerSideProps: GetServerSideProps<
-  EditBlogPostPageProps
-> = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const slug = params?.slug?.toString()!;
   if (!slug) throw Error("找不到标签");
 
@@ -24,9 +22,11 @@ export const getServerSideProps: GetServerSideProps<
     },
   };
 };
+
 interface EditBlogPostPageProps {
   post: BlogPost;
 }
+
 interface EditPostFormData {
   slug: string;
   title: string;
@@ -71,7 +71,7 @@ export default function EditBlogPostPage({ post }: EditBlogPostPageProps) {
         title,
         summary,
         body,
-        featuredImage: featuredImage?.item(0) || undefined,
+        featuredImage: featuredImage?.item(0) as File,
       });
 
       await router.push("/blog/" + slug);

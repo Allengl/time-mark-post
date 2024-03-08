@@ -22,9 +22,7 @@ interface BlogPostPageProps {
   post: BlogPost;
 }
 
-export const getStaticProps: GetStaticProps<BlogPostPageProps> = async ({
-  params,
-}) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug?.toString()!;
   if (!slug) throw Error("slug missing");
 
